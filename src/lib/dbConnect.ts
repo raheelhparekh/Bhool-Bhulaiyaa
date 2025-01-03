@@ -8,10 +8,14 @@ and therefore each time we will need to check if connection already exists or no
 */
 import mongoose from "mongoose";
 
+// Defining a TypeScript type to represent the connection state
+// The property 'isConnected' is optional and will store the connection status
 type connectionObject={
-    isConnected?:number;
+    isConnected?:number; // 'isConnected' indicates the connection state (1 for connected, 0 for disconnected, etc.)
 }
 
+// Creating an object to track the database connection state
+// Initially, it is empty, as no connection is established yet
 const connection:connectionObject={}
 
 async function dbConnect():Promise<void>{
