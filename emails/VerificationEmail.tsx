@@ -1,3 +1,6 @@
+// standard verification email TEMPLATE for sending verification code to user
+// directly can use this template from react-email-components
+
 import {
   Html,
   Head,
