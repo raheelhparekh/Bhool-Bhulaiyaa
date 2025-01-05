@@ -29,7 +29,9 @@ export async function POST(request: Request) {
   try {
     const { username, email, password } = await request.json();
 
-    // step2:  checking USER EXIST BY USERNAME 
+    console.log({ username, email, password });
+
+    // step2:  checking USER EXIST BY USERNAME
     const existingUserVerifiedByUsername = await UserModel.findOne({
       username,
       isVerified: true,
@@ -77,13 +79,12 @@ export async function POST(request: Request) {
 
         await existingUserVerifiedByEmail.save();
       }
-    } 
+    }
     // ELSE : user doesnt exist by email. means a new user is coming to register
     else {
       const hashedPassword = await bcrypt.hash(password, 10);
       const expiryDate = new Date();
       expiryDate.setHours(expiryDate.getHours() + 1);
-      
 
       const user = new UserModel({
         username,
