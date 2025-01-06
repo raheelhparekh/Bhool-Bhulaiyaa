@@ -4,6 +4,7 @@ import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/User";
 import bcrypt from "bcryptjs";
+import { NextRequest } from "next/server";
 
 // SIGN-UP algorithm
 /*
@@ -22,7 +23,7 @@ import bcrypt from "bcryptjs";
     return success:TRUE
 */
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   // STEP1 : Connect to the database
   await dbConnect();
 
