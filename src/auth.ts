@@ -45,6 +45,7 @@ export const { auth, handlers, signIn, signOut }= NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
+      // jwt tokens are stored in user side in frontend
       if (user) {
         token._id = user._id?.toString(); // Convert ObjectId to string
         token.isVerified = user.isVerified;
@@ -54,6 +55,7 @@ export const { auth, handlers, signIn, signOut }= NextAuth({
       return token;
     },
     async session({ session, token }) {
+      // session is stored in server side in backend
       if (token) {
         session.user._id = token._id as string;
         session.user.isVerified = token.isVerified as boolean;
