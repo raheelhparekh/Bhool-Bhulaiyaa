@@ -1,11 +1,11 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface Message extends Document {
   content: string;
   createdAt: Date;
 }
 
-const MessageSchema: Schema<Message> = new Schema({
+const MessageSchema: Schema<Message> = new mongoose.Schema({
   content: {
     type: String,
     required: true,
@@ -29,7 +29,7 @@ export interface User extends Document {
   messages: Message[];
 }
 
-const UserSchema: Schema<User> = new Schema({
+const UserSchema: Schema<User> = new mongoose.Schema({
   username: {
     type: String,
     required: [true, "Please provide a username"],
@@ -66,7 +66,7 @@ const UserSchema: Schema<User> = new Schema({
 
 // next js edge case me run hota he toh we dnt know we r running for first time or not or it is being run before also ie all schemas are built before or not. therefore we need to check if the model is already built or not
 
-const UserModel =
-  mongoose.models?.Users || mongoose.model<User>("users", UserSchema);
+const UserModel: Model<User> =
+  mongoose.models?.User || mongoose.model<User>("User", UserSchema);
 
 export default UserModel;
