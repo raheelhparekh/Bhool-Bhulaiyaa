@@ -32,7 +32,9 @@ export async function GET(request: NextRequest) {
           success: false,
           message: usernameError?.length > 0 || "Invalid query parameters",
         },
-        { status: 400 }
+        { 
+          status: 400 
+        }
       );
     }
 
@@ -48,7 +50,9 @@ export async function GET(request: NextRequest) {
           success: false,
           message: "Username already exists",
         },
-        { status: 400 }
+        { 
+          status: 400 
+        }
       );
     }
 
@@ -68,7 +72,9 @@ export async function GET(request: NextRequest) {
         success: false,
         message: "Error occured while checking username",
       },
-      { status: 500 }
+      { 
+        status: 500 
+      }
     );
   }
 }

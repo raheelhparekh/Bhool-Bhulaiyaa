@@ -25,16 +25,26 @@ export async function POST(request: NextRequest) {
 
     if (!user) {
       return Response.json(
-        { message: "User not found", success: false },
-        { status: 404 }
+        { 
+          success: false,
+          message: "User not found",  
+        },
+        { 
+          status: 404 
+        }
       );
     }
 
     // Check if the user is accepting messages
     if (!user.isAcceptingMessages) {
       return Response.json(
-        { message: "User is not accepting messages", success: false },
-        { status: 403 } 
+        { 
+          success: false ,
+          message: "User is not accepting messages", 
+        },
+        { 
+          status: 403 
+        } 
       );
     }
 
@@ -45,14 +55,25 @@ export async function POST(request: NextRequest) {
     await user.save();
 
     return Response.json(
-      { message: "Message sent successfully", success: true },
-      { status: 201 }
+      { 
+        success: true ,
+        message: "Message sent successfully", 
+        
+      },
+      { 
+        status: 201 
+      }
     );
   } catch (error) {
     console.error("Error adding message:", error);
     return Response.json(
-      { message: "Internal server error", success: false },
-      { status: 500 }
+      { 
+        success: false ,
+        message: "Internal server error", 
+      },
+      { 
+        status: 500 
+      }
     );
   }
 }

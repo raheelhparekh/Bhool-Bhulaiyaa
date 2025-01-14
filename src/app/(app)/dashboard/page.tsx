@@ -190,7 +190,7 @@ function Page() {
         {messages.length > 0 ? (
           messages.map((message) => (
             <MessageCard
-              key={message._id as React.Key}
+              key={message._id as string}
               message={message}
               onMessageDelete={handleDeleteMessage}
             />

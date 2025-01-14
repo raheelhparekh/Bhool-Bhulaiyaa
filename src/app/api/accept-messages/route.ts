@@ -35,8 +35,13 @@ export async function POST(request: NextRequest) {
   const user: User = session?.user as User;
   if (!session || !session.user) {
     return Response.json(
-      { success: false, message: 'Not authenticated' },
-      { status: 401 }
+      { 
+        success: false, 
+        message: 'Not authenticated' 
+      },
+      { 
+        status: 401 
+      }
     );
   }
 
@@ -58,7 +63,9 @@ export async function POST(request: NextRequest) {
           success: false,
           message: 'Unable to find user to update message acceptance status',
         },
-        { status: 404 }
+        { 
+          status: 404 
+        }
       );
     }
 
@@ -69,13 +76,20 @@ export async function POST(request: NextRequest) {
         message: 'Message acceptance status updated successfully',
         updatedUser,
       },
-      { status: 200 }
+      { 
+        status: 200 
+      }
     );
   } catch (error) {
     console.error('Error updating message acceptance status:', error);
     return Response.json(
-      { success: false, message: 'Error updating message acceptance status' },
-      { status: 500 }
+      { 
+        success: false, 
+        message: 'Error updating message acceptance status' 
+      },
+      { 
+        status: 500 
+      }
     );
   }
 }
@@ -93,8 +107,13 @@ export async function GET(request: NextRequest) {
   // Check if the user is authenticated
   if (!session || !user) {
     return Response.json(
-      { success: false, message: 'Not authenticated' },
-      { status: 401 }
+      { 
+        success: false, 
+        message: 'Not authenticated' 
+      },
+      { 
+        status: 401 
+      }
     );
   }
 
@@ -105,8 +124,13 @@ export async function GET(request: NextRequest) {
     if (!foundUser) {
       // User not found
       return Response.json(
-        { success: false, message: 'User not found' },
-        { status: 404 }
+        { 
+          success: false, 
+          message: 'User not found' 
+        },
+        { 
+          status: 404 
+        }
       );
     }
 
@@ -116,13 +140,20 @@ export async function GET(request: NextRequest) {
         success: true,
         isAcceptingMessages: foundUser.isAcceptingMessages,
       },
-      { status: 200 }
+      { 
+        status: 200 
+      }
     );
   } catch (error) {
     console.error('Error retrieving message acceptance status:', error);
     return Response.json(
-      { success: false, message: 'Error retrieving message acceptance status' },
-      { status: 500 }
+      { 
+        success: false, 
+        message: 'Error retrieving message acceptance status' 
+      },
+      { 
+        status: 500 
+      }
     );
   }
 }
