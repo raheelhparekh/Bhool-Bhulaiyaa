@@ -10,8 +10,9 @@ import { acceptMessageSchema } from "@/schemas/acceptMessageSchema";
 import { ApiResponse } from "@/types/ApiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
-import { Loader2, RefreshCcw } from "lucide-react";
+import { Loader2, RefreshCcw} from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import {useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -21,6 +22,7 @@ function Page() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false); //state change for the button of the switch 
+  const router = useRouter();
 
   const {toast} = useToast();
 
@@ -133,6 +135,8 @@ function Page() {
       description: 'Profile URL copied to clipboard',
       variant:"default"
     });
+    router.replace(profileUrl)
+    
   }
 
   if(!session || !session.user){
