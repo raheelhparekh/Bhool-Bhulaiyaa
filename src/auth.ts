@@ -1,8 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import NextAuth from "next-auth"
 import CredentialsProvider from 'next-auth/providers/credentials';
-import bcrypt from 'bcryptjs';
-import dbConnect from '@/lib/dbConnect';
-import UserModel from '@/models/User';
 
 export const { auth, handlers, signIn, signOut }= NextAuth({
   providers: [
@@ -14,34 +12,36 @@ export const { auth, handlers, signIn, signOut }= NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials: any): Promise<any> {
-        await dbConnect();
         try {
-          const user = await UserModel.findOne({
-            $or: [
-              { email: credentials.identifier },
-              { username: credentials.identifier },
-            ],
+          const response = await fetch(`${process.env.NEXTAUTH_URL}/api/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              identifier: credentials.identifier,
+              password: credentials.password,
+            }),
           });
-          if (!user) {
-            throw new Error('No user found with this email');
+
+          if (!response.ok) {
+            throw new Error("Authentication failed");
           }
-          if (!user.isVerified) {
-            throw new Error('Please verify your account before logging in');
-          }
-          const isPasswordCorrect = await bcrypt.compare(
-            credentials.password,
-            user.password
-          );
-          if (isPasswordCorrect) {
+
+          const user = await response.json();
+
+          // Optional: Perform additional checks on the user object
+          if (user && user.isVerified) {
             return user;
           } else {
-            throw new Error('Incorrect password');
+            throw new Error("Account is not verified");
           }
-        } catch (err: any) {
-          throw new Error(err);
+        } catch (error: any) {
+          throw new Error(error.message || "Authentication error");
         }
       },
     }),
+    // Google
   ],
   callbacks: {
     async jwt({ token, user }) {

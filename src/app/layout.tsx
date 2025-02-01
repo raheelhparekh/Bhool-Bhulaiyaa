@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import AuthProvider from '@/context/AuthProvider'
-import { Toaster } from '@/components/ui/toaster';
+import AuthProvider from "@/context/AuthProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,9 +17,9 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <AuthProvider>
-        <body className={inter.className}>
+        <body suppressHydrationWarning className={inter.className}>
           {children}
           <Toaster />
         </body>
